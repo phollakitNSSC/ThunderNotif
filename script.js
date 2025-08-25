@@ -107,7 +107,14 @@ function requestNotificationPermission() {
 }
 
 renderTasks();
-requestNotificationPermission();
+
+// Redirect to notification.html if permission not granted or denied
+if ('Notification' in window) {
+    if (Notification.permission === 'default') {
+        window.location.href = 'notification.html';
+    }
+}
+
 setInterval(() => {
     renderTasks();
     checkNotifications();
