@@ -3,27 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schoolwork Alarm</title>
+    <title>ThunderNotif</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Schoolwork Alarm</h1>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:32px;">
+        <div class="thunder-symbol">
+            <!-- Thunderbolt SVG -->
+            <svg width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="thunder-gradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#facc15"/>
+                        <stop offset="100%" stop-color="#f59e42"/>
+                    </linearGradient>
+                </defs>
+                <path d="M60 10 L30 65 H55 L45 100 L85 45 H60 L70 10 Z" fill="url(#thunder-gradient)" stroke="#fbbf24" stroke-width="4" stroke-linejoin="round"/>
+            </svg>
+        </div>
+    <h1>ThunderNotif</h1>
+    </div>
     <form id="taskForm">
-        <input type="text" id="taskName" placeholder="Task name" required>
+        <input type="text" id="taskName" placeholder="ชื่องาน" required>
         <input type="datetime-local" id="taskDeadline" required>
-        <button type="submit">Add Task</button>
+        <button type="submit">เพิ่มงาน</button>
+        <button type="button" id="notifyNowBtn" title="แจ้งเตือนทันที" style="display:flex;align-items:center;gap:6px;background:#fbbf24;color:#fff;border:none;border-radius:6px;padding:10px 18px;font-size:1em;font-weight:600;cursor:pointer;box-shadow:0 2px 8px rgba(251,191,36,0.08);margin-left:10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"><path fill="#fff" d="M12 2a6 6 0 0 0-6 6v2.278c0 .37-.148.725-.41.987A6.003 6.003 0 0 0 4 16v1h16v-1a6.003 6.003 0 0 0-1.59-4.735 1.4 1.4 0 0 1-.41-.987V8a6 6 0 0 0-6-6Zm0 20a2.5 2.5 0 0 1-2.45-2h4.9A2.5 2.5 0 0 1 12 22Z"/></svg>
+            แจ้งเตือนทันที
+        </button>
     </form>
     <div class="categories">
         <div>
-            <h2>Unfinished Work</h2>
+            <h2>งานที่ยังไม่เสร็จ</h2>
             <ul id="unfinishedList"></ul>
         </div>
         <div>
-            <h2>Overdue Work</h2>
+            <h2>งานที่เลยกำหนด</h2>
             <ul id="overdueList"></ul>
         </div>
         <div>
-            <h2>Finished Work</h2>
+            <h2>งานที่เสร็จแล้ว</h2>
             <ul id="finishedList"></ul>
         </div>
     </div>

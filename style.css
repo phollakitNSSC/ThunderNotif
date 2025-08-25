@@ -84,6 +84,26 @@ form button[type="submit"]:hover {
 .categories > div:hover {
     box-shadow: 0 4px 24px rgba(99,102,241,0.13);
 }
+
+/* Category backgrounds */
+#unfinishedList {
+    background: #fef9c3;
+    border-radius: 10px;
+    padding: 10px 6px;
+    min-height: 40px;
+}
+#overdueList {
+    background: #fee2e2;
+    border-radius: 10px;
+    padding: 10px 6px;
+    min-height: 40px;
+}
+#finishedList {
+    background: #dcfce7;
+    border-radius: 10px;
+    padding: 10px 6px;
+    min-height: 40px;
+}
 .categories h2 {
     color: #6366f1;
     font-size: 1.3em;

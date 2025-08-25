@@ -21,12 +21,12 @@ function renderTasks() {
     const now = new Date();
     tasks.forEach((task, idx) => {
         const li = document.createElement('li');
-        li.textContent = `${task.name} (Due: ${new Date(task.deadline).toLocaleString()})`;
+    li.textContent = `${task.name} (กำหนดส่ง: ${new Date(task.deadline).toLocaleString('th-TH')})`;
         if (!task.finished) {
             if (new Date(task.deadline) < now) {
                 // Overdue
                 const finishBtn = document.createElement('button');
-                finishBtn.textContent = 'Finish';
+                finishBtn.textContent = 'เสร็จสิ้น';
                 finishBtn.className = 'finish-btn';
                 finishBtn.onclick = () => finishTask(idx);
                 li.appendChild(finishBtn);
@@ -34,7 +34,7 @@ function renderTasks() {
             } else {
                 // Unfinished
                 const finishBtn = document.createElement('button');
-                finishBtn.textContent = 'Finish';
+                finishBtn.textContent = 'เสร็จสิ้น';
                 finishBtn.className = 'finish-btn';
                 finishBtn.onclick = () => finishTask(idx);
                 li.appendChild(finishBtn);
@@ -43,7 +43,7 @@ function renderTasks() {
         } else {
             // Finished
             const deleteBtn = document.createElement('button');
-            deleteBtn.textContent = 'Delete';
+            deleteBtn.textContent = 'ลบ';
             deleteBtn.className = 'delete-btn';
             deleteBtn.onclick = () => deleteTask(idx);
             li.appendChild(deleteBtn);
@@ -89,8 +89,8 @@ function checkNotifications() {
                 // Notify every hour
                 const last = task.lastNotified ? new Date(task.lastNotified) : null;
                 if (!last || (now - last) > 1000 * 60 * 60) {
-                    new Notification('Schoolwork Reminder', {
-                        body: `${task.name} is due soon! (${deadline.toLocaleString()})`
+                    new Notification('แจ้งเตือนงาน', {
+                        body: `${task.name} กำลังจะถึงกำหนดส่ง! (${deadline.toLocaleString('th-TH')})`
                     });
                     tasks[idx].lastNotified = now.toISOString();
                     saveTasks();
@@ -109,13 +109,24 @@ function requestNotificationPermission() {
 renderTasks();
 
 // Redirect to notification.html if permission not granted or denied
-if ('Notification' in window) {
-    if (Notification.permission === 'default') {
-        window.location.href = 'notification.html';
+    if ('Notification' in window) {
+        if (Notification.permission === 'granted') {
+            new Notification('ThunderNotif', {
+                body: 'นี่คือการแจ้งเตือนทันที!',
+                icon: ''
+            });
+        } else if (Notification.permission === 'default') {
+            Notification.requestPermission().then(function(permission) {
+                if (permission === 'granted') {
+                    new Notification('ThunderNotif', {
+                        body: 'นี่คือการแจ้งเตือนทันที!',
+                        icon: ''
+                    });
+                }
+            });
+        } else {
+            alert('เบราว์เซอร์ของคุณบล็อกการแจ้งเตือน กรุณาเปิดใช้งานในตั้งค่าเบราว์เซอร์');
+        }
+    } else {
+        alert('เบราว์เซอร์ของคุณไม่รองรับการแจ้งเตือน');
     }
-}
-
-setInterval(() => {
-    renderTasks();
-    checkNotifications();
-}, 60 * 1000); // check every minute for demo (change to 60*60*1000 for 1 hour)
