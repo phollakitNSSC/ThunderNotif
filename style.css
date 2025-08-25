@@ -33,6 +33,21 @@ form {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    align-items: center;
+}
+form select#taskSubject {
+    min-width: 120px;
+    max-width: 180px;
+    font-size: 1em;
+    background: #f9fafb;
+    border: 1.5px solid #bfc7d1;
+    border-radius: 6px;
+    padding: 10px 12px;
+    outline: none;
+    transition: border 0.2s;
+}
+form select#taskSubject:focus {
+    border: 1.5px solid #6366f1;
 }
 
 form input[type="text"],
@@ -190,5 +205,14 @@ button.delete-btn:hover {
         flex-direction: column;
         gap: 8px;
         padding: 10px 4px;
+        align-items: stretch;
+    }
+    form select#taskSubject,
+    form input[type="text"],
+    form input[type="datetime-local"],
+    form button[type="submit"] {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
     }
 }

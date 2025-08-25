@@ -23,6 +23,18 @@
     <h1>ThunderNotif</h1>
     </div>
     <form id="taskForm">
+        <select id="taskSubject" required style="padding:10px 12px;border:1.5px solid #bfc7d1;border-radius:6px;font-size:1em;">
+            <option value="">เลือกวิชา</option>
+            <option value="คณิตศาสตร์">คณิตศาสตร์</option>
+            <option value="วิทยาศาสตร์">วิทยาศาสตร์</option>
+            <option value="ภาษาไทย">ภาษาไทย</option>
+            <option value="ภาษาอังกฤษ">ภาษาอังกฤษ</option>
+            <option value="สังคมศึกษา">สังคมศึกษา</option>
+            <option value="สุขศึกษา">สุขศึกษา</option>
+            <option value="ศิลปะ">ศิลปะ</option>
+            <option value="คอมพิวเตอร์">คอมพิวเตอร์</option>
+            <option value="อื่นๆ">อื่นๆ</option>
+        </select>
         <input type="text" id="taskName" placeholder="ชื่องาน" required>
         <input type="datetime-local" id="taskDeadline" required>
         <button type="submit">เพิ่มงาน</button>

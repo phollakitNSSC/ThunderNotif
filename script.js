@@ -1,3 +1,11 @@
+// Play pop sound on any click
+window.addEventListener('click', function(e) {
+    const tag = e.target.tagName.toLowerCase();
+    if (["button","input","select","label","a"].includes(tag)) {
+        var pop = document.getElementById('popSound');
+        if (pop) { pop.currentTime = 0; pop.play(); }
+    }
+});
 // Schoolwork Alarm App
 // Stores tasks in localStorage and notifies user when deadlines are near
 
@@ -92,8 +100,14 @@ function checkNotifications() {
                     const notif = new Notification('แจ้งเตือนงาน', {
                         body: `${task.name} กำลังจะถึงกำหนดส่ง! (${deadline.toLocaleString('th-TH')})`
                     });
-                    notif.onclick = function() {
+                    notif.onclick = function(event) {
+                        event.preventDefault();
+                        // For most browsers, this will work:
                         window.open('https://phollakitnssc.github.io/ThunderNotif', '_blank');
+                        // For Chrome/Edge, fallback for notification click from service worker:
+                        if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+                            navigator.serviceWorker.controller.postMessage({ action: 'openThunderNotif' });
+                        }
                     };
                     tasks[idx].lastNotified = now.toISOString();
                     saveTasks();
