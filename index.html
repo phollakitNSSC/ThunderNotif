@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schoolwork Alarm</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Schoolwork Alarm</h1>
+    <form id="taskForm">
+        <input type="text" id="taskName" placeholder="Task name" required>
+        <input type="datetime-local" id="taskDeadline" required>
+        <button type="submit">Add Task</button>
+    </form>
+    <div class="categories">
+        <div>
+            <h2>Unfinished Work</h2>
+            <ul id="unfinishedList"></ul>
+        </div>
+        <div>
+            <h2>Overdue Work</h2>
+            <ul id="overdueList"></ul>
+        </div>
+        <div>
+            <h2>Finished Work</h2>
+            <ul id="finishedList"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
