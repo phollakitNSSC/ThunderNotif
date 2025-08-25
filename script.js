@@ -1,3 +1,8 @@
+// Check notifications every 1 minute
+setInterval(() => {
+    renderTasks();
+    checkNotifications();
+}, 60 * 1000); // 1 minute
 // Play pop sound on any click
 window.addEventListener('click', function(e) {
     const tag = e.target.tagName.toLowerCase();
@@ -94,9 +99,9 @@ function checkNotifications() {
             const deadline = new Date(task.deadline);
             const diff = deadline - now;
             if (diff > 0 && diff < 1000 * 60 * 60 * 24) { // within 24 hours
-                // Notify every hour
+                // Notify every 1 minute
                 const last = task.lastNotified ? new Date(task.lastNotified) : null;
-                if (!last || (now - last) > 1000 * 60 * 60) {
+                if (!last || (now - last) > 1000 * 60) {
                     const notif = new Notification('แจ้งเตือนงาน', {
                         body: `${task.name} กำลังจะถึงกำหนดส่ง! (${deadline.toLocaleString('th-TH')})`
                     });
