@@ -1,6 +1,8 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&display=swap');
+
 body {
-    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    font-family: 'Kanit', 'Segoe UI', 'Roboto', Arial, sans-serif;
     background: linear-gradient(135deg, #e0e7ff 0%, #f4f4f4 100%);
     margin: 0;
     padding: 0;
@@ -15,6 +17,7 @@ h1 {
     letter-spacing: 2px;
     font-weight: 700;
     text-shadow: 0 2px 8px rgba(59,59,92,0.08);
+    font-family: 'Kanit', 'Segoe UI', 'Roboto', Arial, sans-serif;
 }
 
 form {
@@ -110,6 +113,7 @@ form button[type="submit"]:hover {
     margin-bottom: 16px;
     letter-spacing: 1px;
     font-weight: 700;
+    font-family: 'Kanit', 'Segoe UI', 'Roboto', Arial, sans-serif;
 }
 ul {
     list-style: none;
