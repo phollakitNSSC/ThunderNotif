@@ -89,9 +89,12 @@ function checkNotifications() {
                 // Notify every hour
                 const last = task.lastNotified ? new Date(task.lastNotified) : null;
                 if (!last || (now - last) > 1000 * 60 * 60) {
-                    new Notification('แจ้งเตือนงาน', {
+                    const notif = new Notification('แจ้งเตือนงาน', {
                         body: `${task.name} กำลังจะถึงกำหนดส่ง! (${deadline.toLocaleString('th-TH')})`
                     });
+                    notif.onclick = function() {
+                        window.open('https://phollakitnssc.github.io/ThunderNotif', '_blank');
+                    };
                     tasks[idx].lastNotified = now.toISOString();
                     saveTasks();
                 }
@@ -106,27 +109,13 @@ function requestNotificationPermission() {
     }
 }
 
+
 renderTasks();
 
-// Redirect to notification.html if permission not granted or denied
-    if ('Notification' in window) {
-        if (Notification.permission === 'granted') {
-            new Notification('ThunderNotif', {
-                body: 'นี่คือการแจ้งเตือนทันที!',
-                icon: ''
-            });
-        } else if (Notification.permission === 'default') {
-            Notification.requestPermission().then(function(permission) {
-                if (permission === 'granted') {
-                    new Notification('ThunderNotif', {
-                        body: 'นี่คือการแจ้งเตือนทันที!',
-                        icon: ''
-                    });
-                }
-            });
-        } else {
-            alert('เบราว์เซอร์ของคุณบล็อกการแจ้งเตือน กรุณาเปิดใช้งานในตั้งค่าเบราว์เซอร์');
-        }
-    } else {
-        alert('เบราว์เซอร์ของคุณไม่รองรับการแจ้งเตือน');
-    }
+// Redirect to notification.html if notification permission is default (not granted or denied)
+if ('Notification' in window && Notification.permission === 'default') {
+    window.location.href = 'notification.html';
+}
+
+// Add pop sound and notification bell for each task (unfinished/overdue)
+// (already handled in renderTasks in previous patch)
