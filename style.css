@@ -11,7 +11,7 @@
     cursor: pointer;
     z-index: 3000;
     box-shadow: 0 2px 8px #23272f33;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.4s, color 0.4s;
 }
 .darkmode-btn:hover {
     background: #6366f1;
@@ -112,7 +112,8 @@ form .form-group textarea {
     border-radius: 8px;
     padding: 12px 14px;
     background: #f9fafb;
-    transition: background 0.4s cubic-bezier(0.4,0,0.2,1), color 0.4s cubic-bezier(0.4,0,0.2,1), border 0.2s, box-shadow 0.2s;
+    color: #222;
+    transition: background 0.4s, color 0.4s, border 0.2s, box-shadow 0.2s;
     outline: none;
     min-width: 0;
     box-shadow: 0 1px 4px #e0e7ef44;
@@ -158,11 +159,13 @@ form .form-group textarea {
 body.dark-mode {
     background: linear-gradient(135deg, #23272f 0%, #18181b 100%);
     color: #e5e7eb;
+    transition: background 0.4s, color 0.4s;
 }
 .dark-mode .main-header {
     background: #23272f;
     color: #fde047;
     box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+    transition: background 0.4s, color 0.4s;
 }
 .dark-mode .header-title {
     color: #fde047;
@@ -183,11 +186,11 @@ body.dark-mode {
 .dark-mode form input,
 .dark-mode form select,
 .dark-mode form textarea {
-    background: #23242a;
-    color: #f5f5f5;
-    border-color: #6366f1;
-    transition: background 0.4s cubic-bezier(0.4,0,0.2,1), color 0.4s cubic-bezier(0.4,0,0.2,1), border 0.2s, box-shadow 0.2s;
+    background: #23242a !important;
+    color: #f5f5f5 !important;
+    border-color: #6366f1 !important;
     caret-color: #ffd600;
+    transition: background 0.4s, color 0.4s, border 0.2s, box-shadow 0.2s;
 }
 .dark-mode form button[type="submit"] {
     background: #6366f1;
@@ -227,6 +230,7 @@ body.dark-mode {
     margin-bottom: 18px;
     position: relative;
     font-family: 'Prompt', 'Kanit', 'Segoe UI', 'Roboto', Arial, sans-serif;
+    transition: background 0.4s, color 0.4s;
 }
 .header-left {
     display: flex;
