@@ -1,4 +1,4 @@
-    <!-- Edit Task Modal -->
+<!-- Edit Task Modal -->
     <div id="editModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.3);align-items:center;justify-content:center;z-index:1000;">
         <div style="background:#fff;padding:24px 18px;border-radius:12px;min-width:260px;max-width:90vw;box-shadow:0 2px 16px rgba(0,0,0,0.13);display:flex;flex-direction:column;gap:12px;">
             <h3 style="margin:0 0 8px 0;">แก้ไขงาน</h3>
@@ -30,31 +30,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ThunderNotif</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+      html, body { font-family: 'Inter', Arial, sans-serif !important; }
+    </style>
 </head>
 <body>
-    <header class="main-header">
-        <div class="header-left">
-            <div class="thunder-symbol">
-                <svg width="48" height="48" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="thunder-gradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stop-color="#facc15"/>
-                            <stop offset="100%" stop-color="#f59e42"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M60 10 L30 65 H55 L45 100 L85 45 H60 L70 10 Z" fill="url(#thunder-gradient)" stroke="#fbbf24" stroke-width="4" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <span class="header-title">ThunderNotif</span>
-            <button id="notifyGlobalBtn" class="header-notify-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24"><path fill="#fff" d="M12 2a6 6 0 0 0-6 6v2.278c0 .37-.148.725-.41.987A6.003 6.003 0 0 0 4 16v1h16v-1a6.003 6.003 0 0 0-1.59-4.735 1.4 1.4 0 0 1-.41-.987V8a6 6 0 0 0-6-6Zm0 20a2.5 2.5 0 0 1-2.45-2h4.9A2.5 2.5 0 0 1 12 22Z"/></svg>
-                แจ้งเตือน
-            </button>
-        </div>
-    </header>
-    <button id="darkModeToggle" class="darkmode-btn">🌙 โหมดกลางคืน</button>
-    </header>
+    <header class="main-header" style="display: flex; align-items: center; justify-content: space-between; padding: 18px 36px 14px 36px; background: rgba(34,36,42,0.98); border-radius: 0 0 24px 24px; box-shadow: 0 4px 24px rgba(99,102,241,0.10); margin-bottom: 32px;">
+  <div class="header-logo-title" style="display: flex; align-items: center; gap: 18px;">
+    <span class="thunder-symbol" style="font-size:3em; display: flex; align-items: center;">
+      <svg width="48" height="48" viewBox="0 0 32 32" fill="#ffd600" xmlns="http://www.w3.org/2000/svg"><path d="M18.5 2L6 18.5H15L13.5 30L26 13.5H17L18.5 2Z"/></svg>
+    </span>
+    <span class="header-title" style="font-family:'Inter','Prompt','Kanit','Segoe UI',sans-serif;font-size:2.2em;font-weight:900;letter-spacing:0.04em;line-height:1.1;background:linear-gradient(90deg,#ffd600 60%,#ff9800 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">ThunderNotif</span>
+    <button class="header-notify-btn" style="font-size: 1.08em; font-weight: 600; padding: 10px 24px; border-radius: 12px; background:#6366f1; color:#fff; box-shadow:0 2px 8px #23272f22; border:none; transition:background 0.2s; margin-left:18px;">แจ้งเตือน</button>
+  </div>
+  <div class="header-actions" style="display: flex; align-items: center; gap: 18px;">
+    <button id="darkModeToggle" class="darkmode-btn" style="margin-left:8px;">🌙 โหมดกลางคืน</button>
+  </div>
+</header>
     <form id="taskForm">
     <div class="form-card">
     <div class="form-grid">
