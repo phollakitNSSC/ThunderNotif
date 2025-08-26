@@ -1,22 +1,38 @@
+// Redirect to notification.html if notification permission is default (not granted or denied)
+if ('Notification' in window && Notification.permission === 'default') {
+    window.location.href = 'notification.html';
+}
+
 // Check notifications every 1 minute
 setInterval(() => {
     renderTasks();
     checkNotifications();
 }, 60 * 1000); // 1 minute
-// Play pop sound on any click
-window.addEventListener('click', function(e) {
-    const tag = e.target.tagName.toLowerCase();
-    if (["button","input","select","label","a"].includes(tag)) {
-        var pop = document.getElementById('popSound');
-        if (pop) { pop.currentTime = 0; pop.play(); }
-    }
+
+// Play pop sound on any click anywhere
+window.addEventListener('click', function() {
+    var pop = document.getElementById('popSound');
+    if (pop) { pop.currentTime = 0; pop.play(); }
 });
 // Schoolwork Alarm App
 // Stores tasks in localStorage and notifies user when deadlines are near
 
+
 const taskForm = document.getElementById('taskForm');
+const taskSubject = document.getElementById('taskSubject');
 const taskName = document.getElementById('taskName');
 const taskDeadline = document.getElementById('taskDeadline');
+const taskNote = document.getElementById('taskNote');
+
+// Edit modal elements
+const editModal = document.getElementById('editModal');
+const editSubject = document.getElementById('editSubject');
+const editName = document.getElementById('editName');
+const editDeadline = document.getElementById('editDeadline');
+const editNote = document.getElementById('editNote');
+const saveEditBtn = document.getElementById('saveEditBtn');
+const cancelEditBtn = document.getElementById('cancelEditBtn');
+let editingIdx = null;
 const unfinishedList = document.getElementById('unfinishedList');
 const overdueList = document.getElementById('overdueList');
 const finishedList = document.getElementById('finishedList');
@@ -31,38 +47,67 @@ function renderTasks() {
     unfinishedList.innerHTML = '';
     overdueList.innerHTML = '';
     finishedList.innerHTML = '';
+    let countUnfinished = 0, countOverdue = 0, countFinished = 0;
     const now = new Date();
     tasks.forEach((task, idx) => {
         const li = document.createElement('li');
-    li.textContent = `${task.name} (กำหนดส่ง: ${new Date(task.deadline).toLocaleString('th-TH')})`;
+        let subjectText = task.subject ? `[${task.subject}] ` : '';
+        let noteText = task.note ? `<br><span style='font-size:0.95em;color:#666;'>${task.note}</span>` : '';
+        li.innerHTML = `<span>${subjectText}${task.name} <span style="font-size:0.95em;color:#888;">(กำหนดส่ง: ${new Date(task.deadline).toLocaleString('th-TH')})</span>${noteText}</span>`;
+
+        // Edit button
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'แก้ไข';
+        editBtn.className = 'finish-btn';
+        editBtn.style.background = '#6366f1';
+        editBtn.style.marginLeft = '8px';
+        editBtn.onclick = () => openEditModal(idx);
+        li.appendChild(editBtn);
+
+        // Delete button
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'ลบ';
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.onclick = () => deleteTask(idx);
+        li.appendChild(deleteBtn);
+
         if (!task.finished) {
+            const finishBtn = document.createElement('button');
+            finishBtn.textContent = 'เสร็จสิ้น';
+            finishBtn.className = 'finish-btn';
+            finishBtn.onclick = () => finishTask(idx);
+            li.appendChild(finishBtn);
             if (new Date(task.deadline) < now) {
-                // Overdue
-                const finishBtn = document.createElement('button');
-                finishBtn.textContent = 'เสร็จสิ้น';
-                finishBtn.className = 'finish-btn';
-                finishBtn.onclick = () => finishTask(idx);
-                li.appendChild(finishBtn);
+                countOverdue++;
                 overdueList.appendChild(li);
             } else {
-                // Unfinished
-                const finishBtn = document.createElement('button');
-                finishBtn.textContent = 'เสร็จสิ้น';
-                finishBtn.className = 'finish-btn';
-                finishBtn.onclick = () => finishTask(idx);
-                li.appendChild(finishBtn);
+                countUnfinished++;
                 unfinishedList.appendChild(li);
             }
         } else {
-            // Finished
-            const deleteBtn = document.createElement('button');
-            deleteBtn.textContent = 'ลบ';
-            deleteBtn.className = 'delete-btn';
-            deleteBtn.onclick = () => deleteTask(idx);
-            li.appendChild(deleteBtn);
+            countFinished++;
             finishedList.appendChild(li);
         }
     });
+
+    // Progress bar and stats
+    const total = countUnfinished + countOverdue + countFinished;
+    const barUnfinished = document.getElementById('barUnfinished');
+    const barOverdue = document.getElementById('barOverdue');
+    const barFinished = document.getElementById('barFinished');
+    if (total > 0 && barUnfinished && barOverdue && barFinished) {
+        barUnfinished.style.width = (countUnfinished/total*100) + '%';
+        barOverdue.style.width = (countOverdue/total*100) + '%';
+        barFinished.style.width = (countFinished/total*100) + '%';
+    } else if (barUnfinished && barOverdue && barFinished) {
+        barUnfinished.style.width = '0%';
+        barOverdue.style.width = '0%';
+        barFinished.style.width = '0%';
+    }
+    const statsText = document.getElementById('statsText');
+    if (statsText) {
+        statsText.innerHTML = `<span>ยังไม่เสร็จ: ${countUnfinished}</span><span>เลยกำหนด: ${countOverdue}</span><span>เสร็จแล้ว: ${countFinished}</span>`;
+    }
 }
 
 function finishTask(idx) {
@@ -80,8 +125,10 @@ function deleteTask(idx) {
 taskForm.onsubmit = function(e) {
     e.preventDefault();
     tasks.push({
+        subject: taskSubject.value,
         name: taskName.value,
         deadline: taskDeadline.value,
+        note: taskNote.value,
         finished: false,
         lastNotified: null
     });
@@ -89,6 +136,36 @@ taskForm.onsubmit = function(e) {
     renderTasks();
     taskForm.reset();
 };
+
+// Edit modal logic
+function openEditModal(idx) {
+    editingIdx = idx;
+    const task = tasks[idx];
+    editSubject.value = task.subject || '';
+    editName.value = task.name || '';
+    editDeadline.value = task.deadline || '';
+    editNote.value = task.note || '';
+    editModal.style.display = 'flex';
+}
+
+if (saveEditBtn && cancelEditBtn) {
+    saveEditBtn.onclick = function() {
+        if (editingIdx !== null) {
+            tasks[editingIdx].subject = editSubject.value;
+            tasks[editingIdx].name = editName.value;
+            tasks[editingIdx].deadline = editDeadline.value;
+            tasks[editingIdx].note = editNote.value;
+            saveTasks();
+            renderTasks();
+            editModal.style.display = 'none';
+            editingIdx = null;
+        }
+    };
+    cancelEditBtn.onclick = function() {
+        editModal.style.display = 'none';
+        editingIdx = null;
+    };
+}
 
 function checkNotifications() {
     if (!('Notification' in window)) return;

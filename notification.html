@@ -1,62 +1,140 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enable Notifications</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        .notif-permission-container {
-            max-width: 350px;
-            margin: 80px auto;
-            padding: 32px 24px;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-            text-align: center;
-        }
-        .notif-allow-btn {
-            display: inline-block;
-            padding: 10px 32px;
-            border: 2px solid #4caf50;
-            border-radius: 6px;
-            background: #f4f4f4;
-            color: #222;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 18px;
-            transition: background 0.2s, color 0.2s;
-        }
-        .notif-allow-btn:hover {
-            background: #4caf50;
-            color: #fff;
-        }
-        .notif-skip-link {
-            display: block;
-            color: #4caf50;
-            text-decoration: underline;
-            cursor: pointer;
-            font-size: 1em;
-        }
+    body {
+        font-family: 'Sarabun', 'Prompt', 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(135deg, #f3f4f6 0%, #e0e7ef 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.5s cubic-bezier(.4,0,.2,1), color 0.5s cubic-bezier(.4,0,.2,1);
+    }
+    .modal, .dark-mode .modal {
+        transition: background 0.5s cubic-bezier(.4,0,.2,1), color 0.5s cubic-bezier(.4,0,.2,1), box-shadow 0.5s cubic-bezier(.4,0,.2,1);
+    }
+    h1, .modal-desc, .allow-btn, .skip-link {
+        transition: color 0.5s cubic-bezier(.4,0,.2,1), background 0.5s cubic-bezier(.4,0,.2,1), box-shadow 0.5s cubic-bezier(.4,0,.2,1);
+    }
+    .modal {
+        background: rgba(255,255,255,0.85);
+        box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+        backdrop-filter: blur(16px);
+        border-radius: 22px;
+        padding: 44px 36px 32px 36px;
+        max-width: 340px;
+        margin: auto;
+        text-align: center;
+        animation: modalPop 0.6s cubic-bezier(.4,0,.2,1);
+        border: 1.5px solid #e0e7ef;
+    }
+    @keyframes modalPop {
+        0% { opacity: 0; transform: scale(0.92) translateY(30px); }
+        100% { opacity: 1; transform: none; }
+    }
+    h1 {
+        color: #18181b;
+        font-size: 2.1em;
+        font-weight: 900;
+        margin-bottom: 0.3em;
+        letter-spacing: 0.01em;
+        text-shadow: 0 2px 8px #bdb76b22, 0 1px 0 #fff8;
+    }
+    .dark-mode h1 {
+        color: #fde047;
+        text-shadow: 0 2px 8px #23272f77, 0 1px 0 #23272f88;
+    }
+    .modal-desc {
+        color: #a1a1aa;
+        font-size: 1.08em;
+        margin-bottom: 2.2em;
+        font-weight: 500;
+    }
+    .allow-btn {
+        background: linear-gradient(90deg, #6366f1 0%, #818cf8 100%);
+        color: #fff;
+        border: none;
+        border-radius: 16px;
+        font-size: 1.25em;
+        font-weight: 700;
+        padding: 0.85em 2.5em;
+        margin-bottom: 1.2em;
+        box-shadow: 0 2px 12px #6366f13a;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.15s;
+    }
+    .allow-btn:hover {
+        background: linear-gradient(90deg, #818cf8 0%, #6366f1 100%);
+        transform: scale(1.04);
+    }
+    .skip-link {
+        color: #22c55e;
+        font-size: 1em;
+        text-decoration: underline;
+        cursor: pointer;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+    .skip-link:hover {
+        color: #16a34a;
+    }
+    /* Dark mode overrides */
+    body.dark-mode {
+        background: linear-gradient(135deg, #23272f 0%, #18181b 100%);
+        color: #e5e7eb;
+    }
+    .dark-mode .modal {
+        background: rgba(36,37,46,0.92);
+        box-shadow: 0 8px 32px 0 rgba(0,0,0,0.28);
+        border: 1.5px solid #23272f;
+    }
+    .dark-mode h1 {
+        color: #fde047;
+        text-shadow: 0 2px 8px #23272f77, 0 1px 0 #23272f88;
+    }
+    .dark-mode .modal-desc {
+        color: #a1a1aa;
+    }
+    .dark-mode .allow-btn {
+        background: linear-gradient(90deg, #6366f1 0%, #818cf8 100%);
+        color: #fff;
+    }
+    .dark-mode .skip-link {
+        color: #4ade80;
+    }
+    .dark-mode .skip-link:hover {
+        color: #22d3ee;
+    }
     </style>
-</head>
-<body>
-    <div class="notif-permission-container">
-        <h2>Enable Notifications?</h2>
-        <p>To get reminders for your schoolwork, please allow notifications.</p>
-        <button class="notif-allow-btn" id="allowBtn">Allow</button>
-        <span class="notif-skip-link" id="skipLink">proceed without notifications.</span>
+    <button id="darkModeToggle" style="position:absolute;top:18px;right:18px;background:#222;color:#fff;border:none;border-radius:20px;padding:8px 18px;font-size:1em;cursor:pointer;z-index:2000;">🌙 โหมดกลางคืน</button>
+    <div class="modal">
+        <h1>Enable Notifications?</h1>
+        <div class="modal-desc">To get reminders for your schoolwork, please allow notifications.</div>
+        <button class="allow-btn" id="allowBtn">Allow</button>
+        <div><span class="skip-link" id="skipLink">proceed without notifications.</span></div>
     </div>
     <script>
-        document.getElementById('allowBtn').onclick = function() {
-            Notification.requestPermission().then(() => {
-                window.location.href = 'index.html';
-            });
-        };
-        document.getElementById('skipLink').onclick = function() {
-            window.location.replace('index.html');
-        };
+    // Dark mode toggle for notification.html
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (localStorage.getItem('darkMode') === '1') {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.textContent = '☀️ โหมดกลางวัน';
+    }
+    darkModeToggle.onclick = function() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDark ? '1' : '0');
+        darkModeToggle.textContent = isDark ? '☀️ โหมดกลางวัน' : '🌙 โหมดกลางคืน';
+    };
+
+    // Modal button logic
+    document.getElementById('allowBtn').onclick = function() {
+        Notification.requestPermission().then(function(permission) {
+            localStorage.setItem('notificationPermission', permission);
+            window.location.href = 'index.html';
+        });
+    };
+    document.getElementById('skipLink').onclick = function() {
+        localStorage.setItem('notificationPermission', 'denied');
+        window.location.href = 'index.html';
+    };
     </script>
-</body>
-</html>
+
