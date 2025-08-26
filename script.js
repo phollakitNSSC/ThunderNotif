@@ -170,7 +170,7 @@ function renderTasks() {
     }
     const statsText = document.getElementById('statsText');
     if (statsText) {
-        statsText.innerHTML = `<span>ยังไม่เสร็จ: ${countUnfinished}</span><span>เลยกำหนด: ${countOverdue}</span><span>เสร็จแล้ว: ${countFinished}</span>`;
+        statsText.innerHTML = `<span>ยังไม่เสร็จ: ${countUnfinished}</span><span>เลยกำหนด: ${countOverdue}</span><span>เสร็จ: ${countFinished}</span>`;
     }
         // Remove 'adding' class after animation
         setTimeout(() => li.classList.remove('adding'), 400);

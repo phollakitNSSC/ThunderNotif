@@ -1,3 +1,22 @@
+.darkmode-btn {
+    position: fixed;
+    top: 18px;
+    right: 24px;
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 1em;
+    cursor: pointer;
+    z-index: 3000;
+    box-shadow: 0 2px 8px #23272f33;
+    transition: background 0.2s, color 0.2s;
+}
+.darkmode-btn:hover {
+    background: #6366f1;
+    color: #fffde4;
+}
 form .form-card {
     background: rgba(255,255,255,0.97);
     border-radius: 18px;
@@ -33,10 +52,43 @@ form .form-grid {
 }
 form .form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1.2fr 0.8fr;
+    grid-template-columns: 1fr 1fr 1fr 1.5fr 0.8fr;
     gap: 18px 16px;
     align-items: end;
     width: 100%;
+    max-width: 900px;
+}
+form .form-group.form-note {
+    grid-column: 4 / span 1;
+}
+form .form-group.form-btn {
+    grid-column: 5 / span 1;
+    align-items: flex-end;
+}
+@media (max-width: 1100px) {
+    form .form-grid {
+        grid-template-columns: 1fr 1fr 1fr 1.2fr 0.8fr;
+    }
+}
+@media (max-width: 900px) {
+    form .form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    form .form-group.form-note {
+        grid-column: 1 / span 2;
+    }
+    form .form-group.form-btn {
+        grid-column: 2 / span 1;
+    }
+}
+@media (max-width: 600px) {
+    form .form-grid {
+        grid-template-columns: 1fr;
+    }
+    form .form-group.form-note,
+    form .form-group.form-btn {
+        grid-column: 1 / span 1;
+    }
 }
 form .form-group {
     display: flex;
