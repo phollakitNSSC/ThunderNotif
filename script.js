@@ -1,3 +1,33 @@
+// Dark mode toggle logic
+document.addEventListener('DOMContentLoaded', function() {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    function setDarkMode(isDark) {
+        if (isDark) {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.textContent = '☀️ โหมดกลางวัน';
+        } else {
+            document.body.classList.remove('dark-mode');
+            darkModeToggle.textContent = '🌙 โหมดกลางคืน';
+        }
+        localStorage.setItem('darkMode', isDark ? '1' : '0');
+    }
+    // On load, set theme from localStorage
+    if (localStorage.getItem('darkMode') === '1') {
+        setDarkMode(true);
+    } else {
+        setDarkMode(false);
+    }
+    if (darkModeToggle) {
+        darkModeToggle.onclick = function() {
+            setDarkMode(!document.body.classList.contains('dark-mode'));
+        };
+    }
+});
+// Set pop sound volume to 60%
+document.addEventListener('DOMContentLoaded', function() {
+    var pop = document.getElementById('popSound');
+    if (pop) pop.volume = 0.6;
+});
 // Global notify button
 const notifyGlobalBtn = document.getElementById('notifyGlobalBtn');
 if (notifyGlobalBtn) {
@@ -226,17 +256,25 @@ function checkNotifications() {
             const deadline = new Date(task.deadline);
             const diff = deadline - now;
             if (diff > 0 && diff < 1000 * 60 * 60 * 24) { // within 24 hours
-                // Notify every 1 minute
+                // Notify more frequently as deadline approaches
+                let interval = 1000 * 60; // default: 1 min
+                if (diff < 1000 * 60 * 60) { // < 1 hour
+                    if (diff < 1000 * 60) { // < 1 min
+                        interval = 3000; // 3 sec
+                    } else if (diff < 1000 * 60 * 10) { // < 10 min
+                        interval = 10000; // 10 sec
+                    } else {
+                        interval = 30000; // 30 sec
+                    }
+                }
                 const last = task.lastNotified ? new Date(task.lastNotified) : null;
-                if (!last || (now - last) > 1000 * 60) {
+                if (!last || (now - last) > interval) {
                     const notif = new Notification('แจ้งเตือนงาน', {
                         body: `${task.name} กำลังจะถึงกำหนดส่ง! (${deadline.toLocaleString('th-TH')})`
                     });
                     notif.onclick = function(event) {
                         event.preventDefault();
-                        // For most browsers, this will work:
                         window.open('https://phollakitnssc.github.io/ThunderNotif', '_blank');
-                        // For Chrome/Edge, fallback for notification click from service worker:
                         if (navigator.serviceWorker && navigator.serviceWorker.controller) {
                             navigator.serviceWorker.controller.postMessage({ action: 'openThunderNotif' });
                         }
