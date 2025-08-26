@@ -1,3 +1,26 @@
+// Global notify button
+const notifyGlobalBtn = document.getElementById('notifyGlobalBtn');
+if (notifyGlobalBtn) {
+    notifyGlobalBtn.onclick = function() {
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('ThunderNotif', {
+                body: 'ถึงเวลาตรวจสอบงานของคุณ! (Check your schoolwork!)',
+                icon: 'https://phollakitnssc.github.io/ThunderNotif/favicon.ico'
+            });
+        } else if ('Notification' in window && Notification.permission !== 'denied') {
+            Notification.requestPermission().then(function(permission) {
+                if (permission === 'granted') {
+                    new Notification('ThunderNotif', {
+                        body: 'ถึงเวลาตรวจสอบงานของคุณ! (Check your schoolwork!)',
+                        icon: 'https://phollakitnssc.github.io/ThunderNotif/favicon.ico'
+                    });
+                }
+            });
+        } else {
+            alert('กรุณาอนุญาตการแจ้งเตือนในเบราว์เซอร์ (Please allow notifications in your browser)');
+        }
+    };
+}
 // Redirect to notification.html if notification permission is default (not granted or denied)
 if ('Notification' in window && Notification.permission === 'default') {
     window.location.href = 'notification.html';
@@ -9,10 +32,18 @@ setInterval(() => {
     checkNotifications();
 }, 60 * 1000); // 1 minute
 
-// Play pop sound on any click anywhere
-window.addEventListener('click', function() {
+// Play pop sound on any click on interactive elements
+function playPop() {
     var pop = document.getElementById('popSound');
     if (pop) { pop.currentTime = 0; pop.play(); }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    // All buttons
+    document.body.addEventListener('click', function(e) {
+        if (e.target.closest('button, input[type="button"], input[type="submit"], a, select, label')) {
+            playPop();
+        }
+    });
 });
 // Schoolwork Alarm App
 // Stores tasks in localStorage and notifies user when deadlines are near
@@ -49,9 +80,12 @@ function renderTasks() {
     finishedList.innerHTML = '';
     let countUnfinished = 0, countOverdue = 0, countFinished = 0;
     const now = new Date();
-    tasks.forEach((task, idx) => {
+        // Sort tasks by deadline ascending
+        const sortedTasks = tasks.slice().sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+        sortedTasks.forEach((task, idx) => {
         const li = document.createElement('li');
-        let subjectText = task.subject ? `[${task.subject}] ` : '';
+            li.className = 'task-item adding';
+            let subjectText = task.subject ? `[${task.subject}] ` : '';
         let noteText = task.note ? `<br><span style='font-size:0.95em;color:#666;'>${task.note}</span>` : '';
         li.innerHTML = `<span>${subjectText}${task.name} <span style="font-size:0.95em;color:#888;">(กำหนดส่ง: ${new Date(task.deadline).toLocaleString('th-TH')})</span>${noteText}</span>`;
 
@@ -108,6 +142,8 @@ function renderTasks() {
     if (statsText) {
         statsText.innerHTML = `<span>ยังไม่เสร็จ: ${countUnfinished}</span><span>เลยกำหนด: ${countOverdue}</span><span>เสร็จแล้ว: ${countFinished}</span>`;
     }
+        // Remove 'adding' class after animation
+        setTimeout(() => li.classList.remove('adding'), 400);
 }
 
 function finishTask(idx) {
@@ -120,6 +156,20 @@ function deleteTask(idx) {
     tasks.splice(idx, 1);
     saveTasks();
     renderTasks();
+        // Animate removal
+        const allLis = document.querySelectorAll('.task-item');
+        if (allLis[idx]) {
+            allLis[idx].classList.add('removing');
+            setTimeout(() => {
+                tasks.splice(idx, 1);
+                saveTasks();
+                renderTasks();
+            }, 300);
+        } else {
+            tasks.splice(idx, 1);
+            saveTasks();
+            renderTasks();
+        }
 }
 
 taskForm.onsubmit = function(e) {
