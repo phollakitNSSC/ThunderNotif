@@ -1,3 +1,166 @@
+form .form-card {
+    background: rgba(255,255,255,0.97);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(99,102,241,0.10);
+    padding: 32px 28px 22px 28px;
+    margin: 0 auto 24px auto;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+form .form-grid {
+    width: 100%;
+}
+@media (max-width: 900px) {
+    form .form-card {
+        padding: 18px 8px 14px 8px;
+        max-width: 98vw;
+    }
+}
+.dark-mode form .form-card {
+    background: #23272f;
+    color: #e5e7eb;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+}
+form .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.2fr 0.8fr;
+    gap: 18px 16px;
+    align-items: end;
+    width: 100%;
+}
+form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+form .form-group label {
+    font-size: 1em;
+    font-weight: 600;
+    color: #6366f1;
+    margin-bottom: 2px;
+    letter-spacing: 0.2px;
+}
+form .form-group input,
+form .form-group select,
+form .form-group textarea {
+    font-family: inherit;
+    font-size: 1.08em;
+    border: 1.5px solid #bfc7d1;
+    border-radius: 8px;
+    padding: 12px 14px;
+    background: #f9fafb;
+    transition: border 0.2s, box-shadow 0.2s;
+    outline: none;
+    min-width: 0;
+    box-shadow: 0 1px 4px #e0e7ef44;
+}
+form .form-group input:focus,
+form .form-group select:focus,
+form .form-group textarea:focus {
+    border: 1.5px solid #6366f1;
+    box-shadow: 0 2px 8px #6366f133;
+}
+form .form-group.form-note {
+    grid-column: 1 / span 3;
+}
+form .form-group.form-btn {
+    grid-column: 5 / span 1;
+    align-items: flex-end;
+}
+form .form-group textarea {
+    min-height: 48px;
+    max-width: 100%;
+    resize: vertical;
+}
+@media (max-width: 900px) {
+    form .form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    form .form-group.form-note {
+        grid-column: 1 / span 2;
+    }
+    form .form-group.form-btn {
+        grid-column: 2 / span 1;
+    }
+}
+@media (max-width: 600px) {
+    form .form-grid {
+        grid-template-columns: 1fr;
+    }
+    form .form-group.form-note,
+    form .form-group.form-btn {
+        grid-column: 1 / span 1;
+    }
+}
+body.dark-mode {
+    background: linear-gradient(135deg, #23272f 0%, #18181b 100%);
+    color: #e5e7eb;
+}
+.dark-mode .main-header {
+    background: #23272f;
+    color: #fde047;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+}
+.dark-mode .header-title {
+    color: #fde047;
+    text-shadow: 0 2px 8px #23272f77, 0 1px 0 #23272f88;
+}
+.dark-mode .header-notify-btn {
+    background: #6366f1;
+    color: #fff;
+}
+.dark-mode .header-notify-btn:hover {
+    background: #818cf8;
+}
+.dark-mode form {
+    background: #23272f;
+    color: #e5e7eb;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+}
+.dark-mode form input,
+.dark-mode form select,
+.dark-mode form textarea {
+    background: #18181b;
+    color: #e5e7eb;
+    border-color: #6366f1;
+}
+.dark-mode form button[type="submit"] {
+    background: #6366f1;
+    color: #fff;
+}
+.dark-mode #progressStats {
+    background: #23272f;
+    color: #e5e7eb;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+}
+.dark-mode #progressBar {
+    background: #18181b;
+}
+.dark-mode #barUnfinished { background: #fde047; }
+.dark-mode #barOverdue { background: #fca5a5; }
+.dark-mode #barFinished { background: #86efac; }
+.dark-mode .category-card {
+    background: #23272f;
+    color: #e5e7eb;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+}
+.dark-mode .unfinished-card { border-top: 5px solid #fde047; }
+.dark-mode .overdue-card { border-top: 5px solid #fca5a5; }
+.dark-mode .finished-card { border-top: 5px solid #86efac; }
+.dark-mode #unfinishedList { background: #fef9c3; }
+.dark-mode #overdueList { background: #fee2e2; }
+.dark-mode #finishedList { background: #dcfce7; }
 .main-header {
     display: flex;
     align-items: center;

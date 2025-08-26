@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Set pop sound volume to 60%
 document.addEventListener('DOMContentLoaded', function() {
     var pop = document.getElementById('popSound');
-    if (pop) pop.volume = 0.6;
+    if (pop) pop.volume = 0.4;
 });
 // Global notify button
 const notifyGlobalBtn = document.getElementById('notifyGlobalBtn');

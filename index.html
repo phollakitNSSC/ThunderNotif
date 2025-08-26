@@ -47,30 +47,48 @@
                 </svg>
             </div>
             <span class="header-title">ThunderNotif</span>
+            <button id="notifyGlobalBtn" class="header-notify-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24"><path fill="#fff" d="M12 2a6 6 0 0 0-6 6v2.278c0 .37-.148.725-.41.987A6.003 6.003 0 0 0 4 16v1h16v-1a6.003 6.003 0 0 0-1.59-4.735 1.4 1.4 0 0 1-.41-.987V8a6 6 0 0 0-6-6Zm0 20a2.5 2.5 0 0 1-2.45-2h4.9A2.5 2.5 0 0 1 12 22Z"/></svg>
+                แจ้งเตือน
+            </button>
         </div>
-        <button id="notifyGlobalBtn" class="header-notify-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24"><path fill="#fff" d="M12 2a6 6 0 0 0-6 6v2.278c0 .37-.148.725-.41.987A6.003 6.003 0 0 0 4 16v1h16v-1a6.003 6.003 0 0 0-1.59-4.735 1.4 1.4 0 0 1-.41-.987V8a6 6 0 0 0-6-6Zm0 20a2.5 2.5 0 0 1-2.45-2h4.9A2.5 2.5 0 0 1 12 22Z"/></svg>
-            แจ้งเตือน
-        </button>
         <button id="darkModeToggle" style="position:absolute;top:18px;right:18px;background:#222;color:#fff;border:none;border-radius:20px;padding:8px 18px;font-size:1em;cursor:pointer;z-index:2000;">🌙 โหมดกลางคืน</button>
     </header>
     <form id="taskForm">
-        <select id="taskSubject" required style="padding:10px 12px;border:1.5px solid #bfc7d1;border-radius:6px;font-size:1em;">
-            <option value="">เลือกวิชา</option>
-            <option value="คณิตศาสตร์">คณิตศาสตร์</option>
-            <option value="วิทยาศาสตร์">วิทยาศาสตร์</option>
-            <option value="ภาษาไทย">ภาษาไทย</option>
-            <option value="ภาษาอังกฤษ">ภาษาอังกฤษ</option>
-            <option value="สังคมศึกษา">สังคมศึกษา</option>
-            <option value="สุขศึกษา">สุขศึกษา</option>
-            <option value="ศิลปะ">ศิลปะ</option>
-            <option value="คอมพิวเตอร์">คอมพิวเตอร์</option>
-            <option value="อื่นๆ">อื่นๆ</option>
-        </select>
-        <input type="text" id="taskName" placeholder="ชื่องาน" required>
-    <input type="datetime-local" id="taskDeadline" required>
-    <textarea id="taskNote" placeholder="รายละเอียดเพิ่มเติม" style="border-radius:6px;padding:8px 10px;resize:vertical;"></textarea>
-    <button type="submit">เพิ่มงาน</button>
+    <div class="form-card">
+    <div class="form-grid">
+        <div class="form-group">
+            <label for="taskSubject">วิชา</label>
+            <select id="taskSubject" required>
+                <option value="">เลือกวิชา</option>
+                <option value="คณิตศาสตร์">คณิตศาสตร์</option>
+                <option value="วิทยาศาสตร์">วิทยาศาสตร์</option>
+                <option value="ภาษาไทย">ภาษาไทย</option>
+                <option value="ภาษาอังกฤษ">ภาษาอังกฤษ</option>
+                <option value="สังคมศึกษา">สังคมศึกษา</option>
+                <option value="สุขศึกษา">สุขศึกษา</option>
+                <option value="ศิลปะ">ศิลปะ</option>
+                <option value="คอมพิวเตอร์">คอมพิวเตอร์</option>
+                <option value="อื่นๆ">อื่นๆ</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="taskName">ชื่องาน</label>
+            <input type="text" id="taskName" placeholder="ชื่องาน" required>
+        </div>
+        <div class="form-group">
+            <label for="taskDeadline">กำหนดส่ง</label>
+            <input type="datetime-local" id="taskDeadline" required>
+        </div>
+        <div class="form-group form-note">
+            <label for="taskNote">รายละเอียด</label>
+            <textarea id="taskNote" placeholder="รายละเอียดงาน (ไม่จำเป็น)..."></textarea>
+        </div>
+        <div class="form-group form-btn">
+            <button type="submit">เพิ่มงาน</button>
+        </div>
+    </div>
+    </div>
     </form>
 
     <div id="progressStats" style="max-width:700px;margin:24px auto 0 auto;padding:12px 18px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(99,102,241,0.07);display:flex;flex-direction:column;align-items:center;gap:10px;">
